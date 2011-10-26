@@ -1,6 +1,6 @@
 {
-    "title": "Simple Viewer",
+    "title": "Link Viewer",
     "desc": "One line description of your viewer",
-    "viewer": "photos",
+    "viewer": "links",
     "static":"true"
 }
