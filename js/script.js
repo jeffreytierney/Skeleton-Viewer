@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 $(function() {
     // be careful with the limit, some people have large datasets ;)
-    $.getJSON(baseUrl + '/Me/links/', {'limit':10, full:true}, function(data) {
+    $.getJSON(baseUrl + '/Me/links/', {'limit':100, full:true}, function(data) {
         console.log(data);
         if(!data || !data.length) return;
         var html = "";
