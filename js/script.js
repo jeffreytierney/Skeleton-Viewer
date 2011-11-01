@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 $(function() {
     // be careful with the limit, some people have large datasets ;)
-    $.getJSON(baseUrl + '/Me/links/', {'limit':500, full:true}, function(data) {
+    $.getJSON(baseUrl + '/Me/links/', {'limit':100, full:true}, function(data) {
         console.log(data);
         if(!data || !data.length) return;
         var html = "", links = [], link, share, cur_link, cur_share;
@@ -56,10 +56,10 @@ $(function() {
           html += "<div>";
             html += (link.title||link.url);
             for(var j=0, j_len=link.shares.length; j<j_len; j++) {
-              html += "<img src='"+link.shares[j].avatar+"' title='"+(link.shares[j].from_login || link.shares[j].from_name) + "' />";
+              html += '<img src="'+link.shares[j].avatar+'" height="30" width="30" title="'+(link.shares[j].from_login || link.shares[j].from_name) + ': ' + link.shares[j].text.replace(/\"/g, "&quot;") + '" />';
             }
             html += "<p>"+link.url+"</p>";
-            if(link.text) { html += "<div>"+link.text+"</div>"; }
+            //if(link.text) { html += "<div>"+link.text+"</div>"; }
           html += "</div>";
         }
         $("#test").html(html);
