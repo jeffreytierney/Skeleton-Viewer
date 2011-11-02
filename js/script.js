@@ -59,7 +59,7 @@ $(function() {
               html += '<img src="'+link.shares[j].avatar+'" height="30" width="30" title="'+(link.shares[j].from_login || link.shares[j].from_name) + ': ' + link.shares[j].text.replace(/\"/g, "&quot;") + '" />';
             }
             html += "<p>"+link.url+"</p>";
-            //if(link.text) { html += "<div>"+link.text+"</div>"; }
+            if(link.text) { html += "<blockquote>"+link.text+"</blockquote>"; }
           html += "</div>";
         }
         $("#test").html(html);
