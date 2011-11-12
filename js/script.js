@@ -17,7 +17,7 @@ $(function() {
             for(var j=0, j_len=info.links[_link].shares.length; j<j_len; j++) {
               share =info.share[info.links[_link].shares[j]].info,
               author = info.author[share.user_id].info;
-              html += '<img src="'+author.avatar+'" height="30" width="30" title="'+(share.from_login || share.from_name) + ': ' + share.text.replace(/\"/g, "&quot;") + '" />';
+              html += '<img src="'+author.avatar+'" height="30" width="30" title="'+(author.from_login || author.from_name) + ': ' + share.text.replace(/\"/g, "&quot;") + '" />';
             }
             html += "<p>"+link.url+"</p>";
             if(link.text) { html += "<blockquote>"+link.text+"</blockquote>"; }
