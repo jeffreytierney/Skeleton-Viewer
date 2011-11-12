@@ -45,16 +45,15 @@
     
       links.push(link);
     }
-    
     return links
   }
   
-  function link_processor(_links) {
+  function link_processor(cached, _links) {
     _links.sort(function(a,b) {return a.ts > b.ts ? 1 : -1 })
     
     
-    var links = {}, nw = {}, author = {}, site = {}, url = {}, share = {},
-        _link, _nw, _author, _site, _url, _share, link_share;
+    var links = cached.links || {}, nw = cached.nw || {}, author = cached.author || {}, site = cached.site || {}, url = cached.url || {}, share = cached.share || {}, ts = cached.ts || [],
+        _link, _nw, _author, _site, _url, _share, link_share, _ts;
 
     for(var i=0, len= _links.length; i<len; i++) {
       _link = _links[i];
@@ -79,12 +78,20 @@
         if(!(_author in author)) { author[_author] = {info:link_share.user,items:[]}; }
         author[_author].items.push({link:_link._id, share:link_share._id});
         
-        _share = link_share._id;
-        if(!(link_share._id in share)) { share[_share] = {info:link_share, links:[]}; }
-        share[_share].links.push(_link._id);
         
-        if(!(_link._id in links)) { links[_link._id] = {info:_link, shares:[]}; }
-        links[_link._id].shares.push(_share);
+
+        _share = link_share._id;
+
+        if(!(_link._id in links)) { 
+          links[_link._id] = {info:_link, shares:[]};
+          ts.push({id:_link._id, ts:_link.ts});
+        }
+        if(!(link_share._id in share)) { links[_link._id].shares.push(_share); }
+
+
+        if(!(_share._id in share)) { share[_share] = {info:link_share, links:[]}; }
+        share[_share].links.push(_link._id);
+
       }
       
       for(var __link in links) {
@@ -96,14 +103,7 @@
       }
 
     }
-    
-    console.log(nw);
-    console.log(author);
-    console.log(site);
-    console.log(url);
-    console.log(share);
-    console.log(links);
-    
+        
     
     return {
       nw:nw,
@@ -111,16 +111,17 @@
       site:site,
       url:url,
       share:share,
-      links:links
+      links:links,
+      ts:ts
     }
     
   }
   
   
   
-  v.init = function(data) {
+  v.init = function(cached, data) {
     var links = link_creator(data);
-    return link_processor(links);
+    return link_processor(cached, links);
   }
   
 })()
